@@ -1,0 +1,50 @@
+.calendar-main .react-calendar {
+    background-color: #fff;
+    padding: 20px;
+    height: 100%;
+}
+.calendar-main .react-calendar .react-calendar__navigation .react-calendar__navigation__label, 
+.calendar-main .react-calendar .react-calendar__month-view__weekdays{
+    color: #00AEB3
+}
+
+.calendar-main .react-calendar .react-calendar__navigation{
+    position: relative;
+    padding: 5px 0px;
+}
+
+.calendar-main .react-calendar__navigation__prev-button{
+    position: absolute;
+    right: 40px;
+    top: 4px;
+    
+}
+.calendar-main .react-calendar__navigation__next-button{
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    
+}
+
+.calendar-main .react-calendar__navigation__arrow{
+    color: #00AEB3;
+    background-color: #D2ECEB;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    justify-content: flex-end;
+    border-radius: 100%;
+}
+.calendar-main .react-calendar .react-calendar__month-view__weekdays__weekday abbr{
+    text-decoration: none;
+}
+
+.dashboard-main{
+    height: calc(100vh - 88px);
+}
+
+.ck-editor__editable {
+    min-height: 300px;
+}

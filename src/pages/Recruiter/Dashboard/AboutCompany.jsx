@@ -1,5 +1,5 @@
 import React from 'react'
-import SideBar from '../../components/Recruiter/SideBar'
+import SideBar from '../../../components/Recruiter/SideBar'
 
 const AboutCompany = () => {
   return (

@@ -1,6 +1,5 @@
 import React from 'react'
-import JobCard from '../../components/Recruiter/JobCard'
-// import { Outlet } from 'react-router-dom'
+import JobCard from '../../../components/Recruiter/JobCard'
 
 const JobOpening = () => {
   return (

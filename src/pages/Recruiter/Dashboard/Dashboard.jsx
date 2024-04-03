@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
-import Search from '../../components/Recruiter/Search'
-import InterviewCountCard from '../../components/Recruiter/InterviewCountCard'
-import JobCard from '../../components/Recruiter/JobCard'
+import InterviewCountCard from '../../../components/Recruiter/InterviewCountCard'
+import JobCard from '../../../components/Recruiter/JobCard'
 import Calendar from 'react-calendar'
 
 const Dashboard = () => {
@@ -43,4 +42,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Dashboard;

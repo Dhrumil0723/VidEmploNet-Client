@@ -5,8 +5,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 const Header = (props) => {
   const navigate = useNavigate()
-  const pathName = useLocation()
-
+  const { pathname } = useLocation()
+  console.log(pathname?.split('/'))
   
 
   return (
@@ -24,7 +24,7 @@ const Header = (props) => {
       </div>
       <div className='flex justify-between items-center'>
         <Search />
-        <button onClick={()=> navigate('/job-opening/create-job')} className='bg-[#005C69] ml-2 py-2 px-6 text-white font-medium'>{props.name}</button>
+        <button onClick={()=> navigate('/dashboard/job-opening/create-job')} className='bg-[#005C69] ml-2 py-2 px-6 text-white font-medium'>{props.name}</button>
       </div>
     </div>
   )

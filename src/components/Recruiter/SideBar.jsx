@@ -34,8 +34,10 @@ const SideBar = () => {
       setIsToggled(!isToggled)
     }
 
+
     const logout = () => {
         destroyCookie(null, 'authToken')
+        destroyCookie(null, 'role')
         navigate('/login')
     }
 
@@ -53,19 +55,19 @@ const SideBar = () => {
                         </div>
                         <div>Dashboard</div>
                     </Link>
-                    <Link to='/job-opening' className={`flex flex-row items-center p-2 cursor-pointer ${ pathname?.split("/")[1] === 'job-opening' ? 'bg-[#005C69] text-white' : '' }` }>
+                    <Link to='/dashboard/job-opening' className={`flex flex-row items-center p-2 cursor-pointer ${ pathname?.split("/")[2] === 'job-opening' ? 'bg-[#005C69] text-white' : '' }` }>
                         <div>
                             <VscBriefcase className='w-6 h-6 mr-2' />
                         </div>
                         <div>Job Openings</div>
                     </Link>
-                    <Link to='/candidates' className={`flex flex-row items-center p-2 cursor-pointer ${ pathname === '/candidates' ? 'bg-[#005C69] text-white' : '' }` }>
+                    <Link to='/dashboard/candidates' className={`flex flex-row items-center p-2 cursor-pointer ${ pathname === '/candidates' ? 'bg-[#005C69] text-white' : '' }` }>
                         <div>
                             <BsPeople className='w-6 h-6 mr-2' />
                         </div>
                         <div>Candidates</div>
                     </Link>
-                    <Link to='/about-company' className={`flex flex-row items-center p-2 rounded cursor-pointer ${ pathname === '/about-company' ? 'bg-[#005C69] text-white' : '' }` }>
+                    <Link to='/dashboard/about-company' className={`flex flex-row items-center p-2 rounded cursor-pointer ${ pathname === '/about-company' ? 'bg-[#005C69] text-white' : '' }` }>
                         <div>
                             <HiOutlineBuildingOffice2 className='w-6 h-6 mr-2' />
                         </div>

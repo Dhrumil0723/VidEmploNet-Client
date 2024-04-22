@@ -49,6 +49,10 @@
     min-height: 300px;
 }
 
+.ck-editor__editable_inline {
+  padding: 0 30px !important;
+}
+
 .loader {
     width: 48px;
     height: 48px;
@@ -78,6 +82,14 @@
     transform: scale(0.5) translate(-48px, -48px);
   }
   
+  .selector .css-b62m3t-container > div{
+    padding-block: 8px;
+  }
+
+  .ck.ck-dropdown .ck-dropdown__arrow{
+    z-index: 0;
+  }
+
   @keyframes rotation {
     0% {
       transform: rotate(0deg);
@@ -91,4 +103,8 @@
     50% {
       transform: scale(1) translate(-50%, -50%);
     }
+  }
+  .jb_description_wrapper ul{
+    list-style: disc;
+    margin-left: 25px;
   }

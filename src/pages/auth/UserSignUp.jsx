@@ -6,11 +6,13 @@ import { FaEye } from 'react-icons/fa6'
 import { IoEyeOff } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import bg from '../asserts/images/bg-img.png'
-import logo from '../asserts/images/logo.png'
-import TextError from '../components/Common/TextError'
-import { _alphabetRegex_, _emailRegex_, _numberRegex_ } from '../lib/Regex'
-import Loader from '../components/Common/Loader'
+import bg from '../../asserts/images/bg-img.png'
+import logo from '../../asserts/images/logo.png'
+import TextError from '../../components/Common/TextError'
+import { _alphabetRegex_, _emailRegex_, _numberRegex_ } from '../../lib/Regex'
+import Loader from '../../components/Common/Loader'
+import Select from 'react-select'
+import { signUpOptions } from '../../lib/Common/AllGlobalFunction'
 
 const validationSchema = Yup.object({
   firstName: Yup.string()
@@ -21,7 +23,10 @@ const validationSchema = Yup.object({
     .required('Last Name is required'),
   email: Yup.string()
     .email('Invalid Email')
-    .matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, 'Enter correct Email')
+    .matches(
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+      'Enter correct Email'
+    )
     .required('Email is required'),
   password: Yup.string()
     .required('Password is Required!')
@@ -36,6 +41,7 @@ const validationSchema = Yup.object({
   mobileNumber: Yup.string()
     .matches(_numberRegex_, 'Please enter valid mobile number')
     .required('Mobile Number is required'),
+  gender: Yup.string().required('Gender is required'),
   role: Yup.string().required('Role is required'),
   companyName: Yup.string().when('role', {
     is: 'recruiter',
@@ -50,14 +56,30 @@ const validationSchema = Yup.object({
   })
 })
 
-const SignUp = () => {
-  
+const UserSignUp = () => {
   const navigate = useNavigate()
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [loader, setLoader] = useState(false);
-  
+  const [loader, setLoader] = useState(false)
+
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      setLoader(true)
+      const response = await axios.post('/signup', values)
+      if (response?.data?.code === 200) {
+        resetForm({ values: '' })
+        toast.success(response.data.message)
+        navigate('/login')
+      } else {
+        toast.error(response.data.message)
+      }
+      setLoader(false)
+    } catch (error) {
+      console.log(error)
+      toast.error('Something went wrong !!')
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -67,37 +89,20 @@ const SignUp = () => {
       confirmPass: '',
       password: '',
       mobileNumber: '',
-      role: 'candidate',
+      gender: '',
+      role: '',
       companyName: '',
       companyURL: ''
     },
     validationSchema,
-    onSubmit: async (values) => {
-      
-      try {
-        setLoader(true)
-        const response = await axios.post('/signup', values)
-        if (response.data.code === 200) {
-          toast.success(response.data.message)
-          navigate('/login');
-        } else {
-          toast.error(response.data.message)
-        }
-        setLoader(false)
-      } catch (error) {
-        console.log(error)
-        toast.error("Something went wrong !!")
-      }
-    }
+    onSubmit: handleSubmit
   })
 
-  const { values, setFieldValue, handleSubmit, errors } = formik
-
-
+  const { values, setFieldValue } = formik
 
   return (
     <>
-    {loader && <Loader />}
+      {loader && <Loader />}
       <FormikProvider value={formik}>
         <div className='flex items-center justify-center min-h-screen bg-gray-100'>
           <div
@@ -120,24 +125,37 @@ const SignUp = () => {
               </button>
             </p>
             <div className='border-b-2 mb-4'></div>
-            <form onSubmit={handleSubmit}>
-              <div className='mb-4'>
+            <form onSubmit={formik?.handleSubmit}>
+              <div className='mb-4 selector'>
                 <label
                   htmlFor='role'
                   className='block text-gray-700 text-sm font-bold mb-2'
                 >
                   Role
                 </label>
-                <select
+
+                <Select
                   id='role'
                   name='role'
-                  onChange={formik.handleChange}
-                  value={values.role}
-                  className='shadow border w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                >
-                  <option value='candidate'>Candidate</option>
-                  <option value='recruiter'>Recruiter</option>
-                </select>
+                  isClearable
+                  onChange={(e) => {
+                    setFieldValue('roleLable', e?.lable)
+                    setFieldValue('role', e?.value)
+                  }}
+                  value={values.roleLable}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 0,
+                    colors: {
+                      ...theme.colors,
+                      primary25: '#69CDCF',
+                      primary: '#00727D',
+                      primary50: '',
+                      primary75: ''
+                    }
+                  })}
+                  options={signUpOptions}
+                />
               </div>
               <div className='flex justify-self-end'>
                 <div className='mb-4  mr-4 w-full'>
@@ -169,9 +187,8 @@ const SignUp = () => {
                     }}
                   />
                   <ErrorMessage name='firstName' component={TextError} />
-                  {/* <ErrorMessage name='firstName' /> */}
                 </div>
-                <div className='mb-4  mr-4 w-full'>
+                <div className='mb-4 w-full'>
                   <label
                     className='block text-gray-700 text-sm font-bold mb-2'
                     htmlFor='name'
@@ -298,7 +315,7 @@ const SignUp = () => {
                   </div>
                   <ErrorMessage name='password' component={TextError} />
                 </div>
-                <div className='mb-4 mr-4 w-full'>
+                <div className='mb-4 w-full'>
                   <label
                     className='block text-gray-700 text-sm font-bold mb-2'
                     htmlFor='confirmPass'
@@ -396,6 +413,49 @@ const SignUp = () => {
                   </div>
                 </div>
               )}
+              <div className='mb-4'>
+                <label className='block text-gray-700 text-sm font-bold mb-2'>
+                  Gender
+                </label>
+                <div className='ml-8 '>
+                  <label className='inline-flex items-center'>
+                    <input
+                      type='radio'
+                      name='gender'
+                      value='male'
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.gender === 'male'}
+                    />
+                    <span className='ml-2'>Male</span>
+                  </label>
+                  <label className='inline-flex items-center ml-4'>
+                    <input
+                      type='radio'
+                      name='gender'
+                      value='female'
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.gender === 'female'}
+                    />
+                    <span className='ml-2'>Female</span>
+                  </label>
+                  <label className='inline-flex items-center ml-4 pt-2'>
+                    <input
+                      type='radio'
+                      name='gender'
+                      value='other'
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.gender === 'other'}
+                    />
+                    <span className='ml-2'>Other</span>
+                  </label>
+                </div>
+                {formik.touched.gender && formik.errors.gender && (
+                  <div className='text-red-500'>{formik.errors.gender}</div>
+                )}
+              </div>
               <div className='flex items-center justify-between'>
                 <button
                   className='bg-[#005C69] w-full text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline'
@@ -412,4 +472,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default UserSignUp

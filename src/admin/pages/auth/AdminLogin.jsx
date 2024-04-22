@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import bg from '../asserts/images/bg-img.png'
-import logo from '../asserts/images/logo.png'
+import bg from '../../../asserts/images/bg-img.png'
+import logo from '../../../asserts/images/logo.png'
 import { ErrorMessage, useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
@@ -9,8 +9,9 @@ import { toast } from 'react-hot-toast'
 import { FaEye } from 'react-icons/fa6'
 import { IoEyeOff } from 'react-icons/io5'
 import { setCookie } from 'nookies'
-import TextError from '../components/Common/TextError'
-import Loader from '../components/Common/Loader'
+import TextError from '../../../components/Common/TextError'
+import Loader from '../../../components/Common/Loader'
+import useAuthenticate from '../../../hooks/useAuthenticate'
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -19,29 +20,32 @@ const validationSchema = Yup.object({
   password: Yup.string().required('Password is required!')
 })
 
-const Login = () => {
+const AdminLogin = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+
+  useAuthenticate()
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
       setLoading(true)
 
-      const response = await axios.post('/login', values)
+      const response = await axios.post('/api/user/admin/login', values)
 
-      if (response.data.code === 200) {
+
+      if (response?.data?.code === 200) {
         toast.success(response.data.message)
-        setCookie(null, 'authToken', response.data.data.token, {
+        setCookie(null, 'authToken', response?.data?.data?.token, {
           maxAge: 24 * 60 * 60,
           path: '/'
         })
-        setCookie(null, 'role', response.data.data.user.role, {
+        setCookie(null, 'user', JSON.stringify(response?.data?.data?.isEmail) , {
           maxAge: 24 * 60 * 60,
           path: '/'
         })
         resetForm({ values: '' })
-        setTimeout(() => navigate('/dashboard'), 1000)
+        setTimeout(() => navigate('/admin/dashboard'), 1000)
       } else {
         toast.error(response.data.message)
       }
@@ -49,6 +53,7 @@ const Login = () => {
     } catch (error) {
       console.log(error)
       toast.error('Something went wrong !!')
+      setLoading(false);
     }
   }
 
@@ -67,7 +72,7 @@ const Login = () => {
     <>
       {loading && <Loader />}
       <FormikProvider value={formik}>
-        <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+        <div className='flex items-center justify-center min-h-screen'>
           <div
             className='fixed inset-0 bg-cover bg-center z-0'
             style={{ backgroundImage: `url(${bg})` }}
@@ -78,15 +83,6 @@ const Login = () => {
               <img className='h-12 mb-4' src={logo} alt='Logo' />
             </div>
             <h2 className='text-3xl font-bold text-gray-800 mb-4'>Login</h2>
-            <p>
-              Don't have an account?
-              <button
-                onClick={() => navigate('/signup')}
-                className='font-semibold text-gray-600 ml-1 mb-4 underline underline-offset-2'
-              >
-                Sign up
-              </button>
-            </p>
             <div className='border-b-2 mb-8'></div>
             <form onSubmit={formik.handleSubmit}>
               <div className='mb-4'>
@@ -172,4 +168,4 @@ const Login = () => {
     </>
   )
 }
-export default Login
+export default AdminLogin

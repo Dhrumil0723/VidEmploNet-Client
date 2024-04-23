@@ -11,24 +11,24 @@ const JobOpening = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [pageSize, setPageSize] = useState(3)
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const fetchJob = async (page, size) => {
+  const fetchJob = async (page, size, search) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/job?page=${page}&limit=${size}`
-      )
-      setJobData(response?.data?.data)
-      console.log(response?.data?.data)
-      setTotalPages(response?.data?.pagination?.totalPages)
+        `api/job?page=${page}&limit=${size}&search=${search}`
+      );
+      // console.log('Response:', response);
+      setJobData(response?.data?.data);
+      setTotalPages(response?.data?.pagination?.totalPages);
     } catch (error) {
-      console.log(error)
+      console.error('Error fetching data:', error);
     }
   }
 
   useEffect(() => {
-    console.log('Fetching job data...')
-    fetchJob(currentPage, pageSize)
-  }, [currentPage, pageSize])
+    fetchJob(currentPage, pageSize, searchQuery)
+  }, [currentPage, pageSize, searchQuery])
 
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1)
@@ -39,9 +39,16 @@ const JobOpening = () => {
       setPageSize(selectedOption.value)
       // After changing page size, reset to the first page
       setCurrentPage(1)
-    }else{
+    } else {
       setPageSize(3)
     }
+  }
+
+  const handleSearch = (e) => {
+    setSearchQuery(e)
+    console.log("e ==>", e)
+    // After performing a search, reset to the first page
+    setCurrentPage(1)
   }
 
   return (
@@ -49,7 +56,7 @@ const JobOpening = () => {
       <div className='bg-white p-6'>
         <div className='flex justify-between'>
           <div className='font-medium text-xl'>Current Job openings</div>
-          <Search />
+          <Search handleSearch={handleSearch} />
         </div>
         <div className='grid grid-cols-3 gap-6'>
           {jobData.map((data, key) => (
@@ -78,8 +85,10 @@ const JobOpening = () => {
           />
           <ReactPaginate
             className='flex gap-4'
+            breakLabel='...'
             pageCount={totalPages}
-            pageRangeDisplayed={5}
+            renderOnZeroPageCount={0}
+            pageRangeDisplayed={1}
             marginPagesDisplayed={1}
             onPageChange={handlePageClick}
             containerClassName={'pagination'}

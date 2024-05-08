@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-const Candidates = () => {
+const Company = () => {
   return (
     <>
       <Outlet />
@@ -9,4 +9,4 @@ const Candidates = () => {
   )
 }
 
-export default Candidates
+export default Company

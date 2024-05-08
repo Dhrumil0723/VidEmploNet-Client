@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   const fetchJob = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/job')
+      const response = await axios.get('/api/job')
       setJobData(response?.data?.data)
     } catch (error) {
       console.log(error)

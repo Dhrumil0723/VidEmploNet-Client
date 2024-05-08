@@ -11,11 +11,11 @@ import Swal from 'sweetalert2'
 const JobDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [data, setData] = useState(false)
+  const [data, setData] = useState([])
 
   const fetchJobData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/job/${id}`)
+      const response = await axios.get(`api/job/${id}`)
       setData(response?.data?.data)
     } catch (error) {
       console.error('Error fetching product details', error)
@@ -36,7 +36,7 @@ const JobDetails = () => {
 
       if (result.isConfirmed) {
         const response = await axios.delete(
-          `http://localhost:3001/api/job/${id}`
+          `api/job/${id}`
         )
 
         if (response?.data?.code === 200) {

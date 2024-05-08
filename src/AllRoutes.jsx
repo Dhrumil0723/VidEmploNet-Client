@@ -14,8 +14,18 @@ import RecruiterLayout from './pages/Recruiter/Dashboard/RecruiterLayout'
 import { parseCookies } from 'nookies'
 import CandidateLayout from './pages/Candidate/Dashboard/CandidateLayout'
 import AdminLogin from './admin/pages/auth/AdminLogin'
-import AdminDashboard from './admin/pages/AdminDashboard'
+import AdminDashboard from './admin/pages/dashboard/AdminDashboard'
 import JobDetails from './pages/Recruiter/Dashboard/JobDetails'
+import AboutCompany from './pages/Recruiter/Dashboard/AboutCompany'
+import EditAboutCompany from './pages/Recruiter/Dashboard/EditAboutCompany'
+import Company from './pages/Recruiter/Dashboard/Company'
+import CandidatesList from './pages/Recruiter/Dashboard/CandidatesList'
+import CandidatesDetails from './pages/Recruiter/Dashboard/CandidatesDetails'
+import JobListing from './pages/Candidate/Dashboard/JobListing'
+import MyApplication from './pages/Candidate/Dashboard/MyApplication'
+import JobDetail from './pages/Candidate/Dashboard/JobDetail'
+import AdminLayout from './admin/pages/dashboard/AdminLayout'
+import UserList from './admin/pages/dashboard/UserList'
 
 const AllRoutes = () => {
   const cookies = parseCookies()
@@ -51,22 +61,35 @@ const AllRoutes = () => {
                 />
                 <Route path=':id' element={<JobDetails />} />
               </Route>
-              <Route path='candidates' element={<Candidates />} />
-              <Route path='about-company' element={<Dashboard />} />
+              <Route path='candidates' element={<Candidates />}>
+                <Route index element={<CandidatesList />} />
+                <Route path=':id' element={<CandidatesDetails />} />
+              </Route>
+              <Route path='about-company' element={<Company />}>
+                <Route index element={<AboutCompany />} />
+                <Route path='edit-about-company' element={<EditAboutCompany />} />
+              </Route>
             </Route>
           )}
 
           {/* all candidate routes */}
 
           {user?.role == 'candidate' && (
-            <Route path='/dashboard' element={<CandidateLayout />}></Route>
+            <Route path='/dashboard' element={<CandidateLayout />}>
+              <Route index element={<JobListing />} />
+              <Route path='job-detail/:id' element={<JobDetail />} />
+              <Route path='my-application' element={<MyApplication />} />
+            </Route>
           )}
         </Route>
 
         {/* all admin routes */}
 
         {user?.role == 'admin' && (
-          <Route path='/admin/dashboard' element={<AdminDashboard />}></Route>
+          <Route path='/admin/dashboard' element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path='user-list' element={<UserList />} />
+          </Route>
         )}
       </Routes>
     </>

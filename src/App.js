@@ -7,7 +7,7 @@ import Footer from './components/Layout/Footer';
 import { useLocation } from 'react-router-dom'
 
 
-axios.defaults.baseURL = 'http://192.168.1.34:3001'
+axios.defaults.baseURL = 'http://192.168.1.84:3001'
 // axios.defaults.baseURL = 'http://localhost:3001'
 axios.defaults.withCredentials = true;
 
@@ -19,9 +19,9 @@ function App() {
     <>
       <Toaster position='top-right' toastOptions={{ duration: 2000 }} />
 
-      { !(location.pathname.startsWith('/dashboard') ) && <Header />}
+      { !(location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/admin') ) && <Header />}
       <AllRoutes />
-      { !(location.pathname.startsWith('/dashboard') ) && <Footer />}
+      { !(location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/admin') ) && <Footer />}
     </>
   )
 }

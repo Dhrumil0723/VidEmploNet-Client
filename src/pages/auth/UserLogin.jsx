@@ -72,9 +72,9 @@ const UserLogin = () => {
     <>
       {loading && <Loader />}
       <FormikProvider value={formik}>
-        <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+        <div className='flex items-center justify-center relative min-h-screen bg-gray-100'>
           <div
-            className='fixed inset-0 bg-cover bg-center z-0'
+            className='absolute inset-0 bg-cover bg-center z-0'
             style={{ backgroundImage: `url(${bg})` }}
           ></div>
 

@@ -70,6 +70,7 @@ const CreateNewJob = () => {
   const handleSubmit = async (values, { resetForm }) => {
     try {
       values = { ...values, questions, recruiterId: user._id }
+      console.log(values)
       const response = id
         ? await axios.put(`/api/job/${id}`, values)
         : await axios.post('/api/job', values)

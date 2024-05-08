@@ -2,7 +2,7 @@ import React from 'react'
 import { MdKeyboardArrowLeft } from 'react-icons/md'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-const Header = (props) => {
+const AdminHeader = (props) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
@@ -32,4 +32,4 @@ const Header = (props) => {
   )
 }
 
-export default Header
+export default AdminHeader

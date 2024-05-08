@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 // SingUp Options
 export const signUpOptions = [
     { value: 'candidate', label:'Candidate' },
@@ -79,3 +81,48 @@ export const pageSizeOptions = [
     { value: '6', label: '6' },
     { value: '12', label: '12' }
 ]
+
+// Select Type Of Company Options
+export const typeOfCompanyOptions = [
+    { value: 'Service', label: 'Service' },
+    { value: 'Product', label: 'Product' }
+]
+
+// Select Employees Options
+export const employeesOptions = [
+    { value: '1 - 10', label: '1 - 10' },
+    { value: '10 - 50', label: '10 - 50' },
+    { value: '50 - 100', label: '50 - 100' },
+    { value: '100 - 200', label: '100 - 200' },
+    { value: '200 - 500', label: '200 - 500' },
+    { value: '500 +', label: '500 +' }
+]
+
+// Select Posted Time Options
+export const timeOptions = [
+    { value: 'PastMonth', label: 'Past Month' },
+    { value: 'PastWeek', label: 'Past Week' },
+    { value: 'Past24Hours', label: 'Past 24 Hours' },
+]
+
+// DateTime formatting function
+export const dateTimeFormat = (jobCreatedAt) => {
+    let difference = {
+        value: null,
+        type: null,
+    };
+
+    difference.value = moment().diff(jobCreatedAt, "months");
+    difference.type = "Months";
+
+    if (difference.value < 1) {
+        difference.value = moment().diff(jobCreatedAt, "days");
+        difference.type = "Days";
+        
+        if (difference.value < 1) {
+            difference.value = moment().diff(jobCreatedAt, "hours");
+            difference.type = "Hours";
+        }
+    }
+    return(`${difference.value} ${difference.type} ago`);
+}

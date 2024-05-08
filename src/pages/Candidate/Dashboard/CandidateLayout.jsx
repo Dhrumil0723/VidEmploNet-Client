@@ -1,9 +1,14 @@
 import React from 'react'
+import CandidateHeader from '../../../components/Candidate/CandidateHeader'
+import { Outlet } from 'react-router-dom'
 
 const CandidateLayout = () => {
   return (
     <>
-        <div className='text-6xl'>Candidate Layout</div>
+      <div className='bg-[#EAECF0]'>
+        <CandidateHeader />
+        <Outlet />
+      </div>
     </>
   )
 }

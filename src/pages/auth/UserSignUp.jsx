@@ -66,7 +66,7 @@ const UserSignUp = () => {
   const handleSubmit = async (values, { resetForm }) => {
     try {
       setLoader(true)
-      const response = await axios.post('/signup', values)
+      const response = await axios.post('api/user/signup', values)
       if (response?.data?.code === 200) {
         resetForm({ values: '' })
         toast.success(response.data.message)
@@ -78,6 +78,7 @@ const UserSignUp = () => {
     } catch (error) {
       console.log(error)
       toast.error('Something went wrong !!')
+      setLoader(false)
     }
   }
 
@@ -104,9 +105,9 @@ const UserSignUp = () => {
     <>
       {loader && <Loader />}
       <FormikProvider value={formik}>
-        <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+        <div className='flex items-center relative justify-center min-h-screen bg-gray-100'>
           <div
-            className='fixed inset-0 bg-cover bg-center z-0'
+            className='absolute inset-0 bg-cover bg-center z-0'
             style={{ backgroundImage: `url(${bg})` }}
           ></div>
 

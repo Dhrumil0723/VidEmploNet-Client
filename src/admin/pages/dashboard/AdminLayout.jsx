@@ -7,7 +7,7 @@ import AdminHeader from '../../components/AdminHeader'
 const AdminLayout = () => {
 
   const { pathname } = useLocation();
-  let pageTitle = (pathname?.split('/')[2] || pathname?.split('/')[1]).replace('-', ' ');
+  let pageTitle = (pathname?.split('/')[3] || pathname?.split('/')[2]).replace('-', ' ');
   pageTitle = pageTitle.replace(/\b\w/g, (char) => char.toUpperCase());
 
   return (

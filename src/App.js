@@ -7,7 +7,7 @@ import Footer from './components/Layout/Footer';
 import { useLocation } from 'react-router-dom'
 
 
-axios.defaults.baseURL = 'http://192.168.1.84:3001'
+axios.defaults.baseURL = 'http://192.168.1.12:3001'
 // axios.defaults.baseURL = 'http://localhost:3001'
 axios.defaults.withCredentials = true;
 

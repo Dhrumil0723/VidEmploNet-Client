@@ -4,8 +4,8 @@ import FilterOption from '../../../components/Candidate/FilterOption'
 import JobListingCard from '../../../components/Candidate/JobListingCard'
 import axios from 'axios'
 import { useImmer } from 'use-immer'
-import useDebounce from '../../../hooks/useDebounce '
 import ReactPaginate from 'react-paginate'
+import useDebounce from '../../../hooks/useDebounce '
 
 const JobListing = () => {
   const [jobData, setJobData] = useState([])

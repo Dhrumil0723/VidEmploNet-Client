@@ -25,7 +25,10 @@ import JobListing from './pages/Candidate/Dashboard/JobListing'
 import MyApplication from './pages/Candidate/Dashboard/MyApplication'
 import JobDetail from './pages/Candidate/Dashboard/JobDetail'
 import AdminLayout from './admin/pages/dashboard/AdminLayout'
-import UserList from './admin/pages/dashboard/UserList'
+import RecruiterList from './admin/pages/dashboard/RecruiterList'
+import CandidateList from './admin/pages/dashboard/CandidateList'
+import AdminPlans from './admin/pages/dashboard/AdminPlans'
+import AdminChangePassword from './admin/pages/dashboard/AdminChangePassword'
 
 const AllRoutes = () => {
   const cookies = parseCookies()
@@ -88,7 +91,10 @@ const AllRoutes = () => {
         {user?.role == 'admin' && (
           <Route path='/admin/dashboard' element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
-            <Route path='user-list' element={<UserList />} />
+            <Route path='recruiter' element={<RecruiterList />} />
+            <Route path='candidate' element={<CandidateList />} />
+            <Route path='plans' element={<AdminPlans />} />
+            <Route path='change-password' element={<AdminChangePassword />} />
           </Route>
         )}
       </Routes>

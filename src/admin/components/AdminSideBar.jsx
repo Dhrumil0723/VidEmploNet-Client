@@ -59,9 +59,7 @@ const AdminSideBar = () => {
           <Link
             to='/admin/dashboard'
             className={`flex flex-row items-center p-2 cursor-pointer ${
-              pathname?.split('/')[2] === 'dashboard'
-                ? 'bg-[#005C69] text-white'
-                : ''
+              pathname === '/admin/dashboard' ? 'bg-[#005C69] text-white' : ''
             }`}
           >
             <div>
@@ -70,34 +68,37 @@ const AdminSideBar = () => {
             <div>Dashboard</div>
           </Link>
           <Link
-            className={`flex flex-row items-center p-2 cursor-pointer ${
-              pathname?.split('/')[3] === 'Users'
+            className={`flex flex-row justify-between items-center p-2 cursor-pointer ${
+              pathname?.split('/')[3] === 'recruiter' || pathname?.split('/')[3] === 'candidate'
                 ? 'bg-[#005C69] text-white'
                 : ''
             }`}
+            onClick={() => toggleDropdown()}
           >
-            <div>
+            <div className='flex items-center'>
               <BsPeople className='w-6 h-6 mr-2' />
+              <div>Users</div>
             </div>
-            <div className='flex justify-between items-center'>
-              Users
-              {isDropdownOpen ? <FaCaretUp /> : <FaCaretDown />}
-              {isDropdownOpen && (
-                <div className='ml-4'>
-                  <Link to='/admin/recruiter' className='text-black'>
-                    Recruiter
-                  </Link>
-                  <Link to='/admin/candidate' className='text-black'>
-                    Candidate
-                  </Link>
-                </div>
-              )}
-            </div>
+            <div>{isDropdownOpen ? <FaCaretUp /> : <FaCaretDown />}</div>
           </Link>
+          {isDropdownOpen && (
+            <ul className='ml-4'>
+              <li>
+                <Link to='/admin/dashboard/recruiter' className='text-black'>
+                  Recruiter
+                </Link>
+              </li>
+              <li className='mt-2'>
+                <Link to='/admin/dashboard/candidate' className='text-black'>
+                  Candidate
+                </Link>
+              </li>
+            </ul>
+          )}
           <Link
-            to='/dashboard/candidates'
+            to='/admin/dashboard/plans'
             className={`flex flex-row items-center p-2 cursor-pointer ${
-              pathname?.split('/')[3] === 'Plans'
+              pathname?.split('/')[3] === 'plans'
                 ? 'bg-[#005C69] text-white'
                 : ''
             }`}
@@ -108,7 +109,7 @@ const AdminSideBar = () => {
             <div>Plans</div>
           </Link>
           <Link
-            to='/dashboard/about-company'
+            to='/admin/dashboard/change-password'
             className={`flex flex-row items-center p-2 rounded cursor-pointer ${
               pathname?.split('/')[3] === 'change-password'
                 ? 'bg-[#005C69] text-white'
@@ -124,14 +125,14 @@ const AdminSideBar = () => {
         {isToggled && (
           <div className='absolute bottom-20 shadow left-60 p-2 bg-white '>
             <div className='flex flex-col-reverse gap-2'>
-              {/* <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2'>
                 <IoLogOutOutline className='text-xl' />
                 <button onClick={logout}> Logout</button>
-              </div> */}
-              <div className='flex items-center gap-2'>
+              </div>
+              {/* <div className='flex items-center gap-2'>
                 <FaRegUser />
                 <button>Profile</button>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

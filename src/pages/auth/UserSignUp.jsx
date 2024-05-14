@@ -66,6 +66,7 @@ const UserSignUp = () => {
   const handleSubmit = async (values, { resetForm }) => {
     try {
       setLoader(true)
+      values = { ...values, userStatus: 'Active'}
       const response = await axios.post('api/user/signup', values)
       if (response?.data?.code === 200) {
         resetForm({ values: '' })

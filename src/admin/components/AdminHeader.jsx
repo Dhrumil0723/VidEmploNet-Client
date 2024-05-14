@@ -10,7 +10,7 @@ const AdminHeader = (props) => {
     <div className='flex justify-between bg-[#D2ECEB] p-6'>
       <div className='flex justify-between items-center'>
         {
-          pathname?.split("/")?.[3] &&
+          pathname?.split("/")?.[4] &&
           <div className='bg-white flex justify-between items-center text-[#00AEB3] p-1 mr-2 cursor-pointer' onClick={() => navigate(-1)}>
           <div>
             <MdKeyboardArrowLeft className='text-xl' />

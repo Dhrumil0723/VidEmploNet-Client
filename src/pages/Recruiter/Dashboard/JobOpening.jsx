@@ -7,10 +7,15 @@ import Select from 'react-select'
 import { pageSizeOptions } from '../../../lib/Common/AllGlobalFunction'
 import { useImmer } from 'use-immer'
 import useDebounce from '../../../hooks/useDebounce '
+import { parseCookies } from 'nookies'
 
 const JobOpening = () => {
   const [jobData, setJobData] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
+
+  const cookies = parseCookies()
+
+  const user = cookies?.user?.length > 0 ? JSON.parse(cookies?.user) : ''
 
   const debouncedSearchQuery = useDebounce(searchQuery, 2000)
 
@@ -23,7 +28,7 @@ const JobOpening = () => {
   const fetchJob = async (search) => {
     try {
       const response = await axios.get(
-        `api/job?page=${filterData.currentPage}&limit=${filterData.pageSize}&search=${search}`
+        `api/job/specific?id=${user?._id}&page=${filterData.currentPage}&limit=${filterData.pageSize}&search=${search}`
       )
       if (response && response?.data) {
         setJobData(response?.data?.data)

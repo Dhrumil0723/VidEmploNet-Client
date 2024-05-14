@@ -105,6 +105,12 @@ export const timeOptions = [
     { value: 'Past24Hours', label: 'Past 24 Hours' },
 ]
 
+// Select User Status Options
+export const userStatusOptions = [
+    { value: 'Active', label: 'Active' },
+    { value: 'Inactive', label: 'Inactive' },
+]
+
 // DateTime formatting function
 export const dateTimeFormat = (jobCreatedAt) => {
     let difference = {
@@ -126,3 +132,13 @@ export const dateTimeFormat = (jobCreatedAt) => {
     }
     return(`${difference.value} ${difference.type} ago`);
 }
+
+// Select Pagination Limit Options
+export const paginationLimitOptions = [
+    {value: '10', label: '10'},
+    {value: '20', label: '20'},
+    {value: '30', label: '30'},
+    {value: '50', label: '50'},
+    {value: '100', label: '100'},
+
+]
